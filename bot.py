@@ -20,7 +20,7 @@ logging.basicConfig(level=logging.INFO, filename = "mylog.log", format = "%(asct
 async def process_command_start(message: Message):
     user_name = message.from_user.full_name
     user_id = message.from_user.id
-    text = f'Привет, {user_name}! Я бот, который переводит ФИО с кириллицы на латиницу. Укажи, пожалуйста, полное ФИО.'
+    text = f'Привет, {user_name}! Я бот, который переводит ФИО с кириллицы на латиницу. Напиши, пожалуйста, своё полное ФИО.'
     logging.info(f'{user_name} {user_id} запустил бота')
     await bot.send_message(chat_id=user_id, text=text)
 
@@ -30,7 +30,7 @@ async def name_trans(message: Message):
     user_name = message.from_user.full_name
     user_id = message.from_user.id
     text = message.text
-    logging.info(f'{user_name} {user_id}: {text}')
+    logging.info(f'{user_name} {user_id}: ответ на запрос: {text}')
     await message.answer(text=name_transformation(text))
 
 
@@ -38,13 +38,13 @@ def name_transformation(name):
     d= {'А':'A', 'Б':'B', 'В':'V', 'Г':'G',	'Д':'D', 'Е':'E', 'Ё':'E', 'Ж':'ZH', 'З':'Z',
         'И':'I', 'Й':'I', 'К':'K', 'Л':'L',	'М':'M', 'Н':'N', 'О':'O', 'П':'P',	'Р':'R', 
         'С':'S', 'Т':'T', 'У':'U', 'Ф':'F',	'Х':'KH', 'Ц':'TS',	'Ч':'CH', 'Ш':'SH',	'Щ':'SHCH',	
-        'Ы':'Y', 'Ъ':'IE', 'Э':'E',	'Ю':'IU', 'Я':'IA', ' ':' ', '-':'-', "'":"'"}
+        'Ы':'Y', 'Ъ':'IE', 'Э':'E',	'Ю':'IU', 'Я':'IA', 'Ь':'', ' ':' ', '-':'-', "'":"'"}
     latin_name = ''
     for i in name.upper():
         if i in d:
             latin_name += d[i]
         else:
-            return 'Похоже в ФИО есть недопустимые знаки или латинские буквы. Пожалуйста, укажите корректное имя киррилицей.'
+            return 'Похоже в ФИО есть недопустимые знаки или латинские буквы. Пожалуйста, укажи корректное имя киррилицей.'
     return latin_name
 
 
